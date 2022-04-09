@@ -59,6 +59,7 @@ const container = document.querySelector('[data-container]');
             container.appendChild(myImg);
         }).catch(function(err){
             console.log(err);
+            if(container.contains(myImg)) myImg.parentNode.removeChild(myImg);
             container.appendChild(defaultImg);
         })
 
