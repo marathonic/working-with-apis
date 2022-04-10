@@ -2,6 +2,7 @@ const myImg = document.querySelector('img');
 const defaultImg = new Image();
 defaultImg.src = './oops.png';
 
+
 const container = document.querySelector('[data-container]');
         const headerContainer = document.createElement('div');        
         headerContainer.classList.add('header-container');
@@ -11,6 +12,9 @@ const container = document.querySelector('[data-container]');
         const randomBtn = document.createElement('button');
         randomBtn.classList.add('random-btn');
         randomBtn.innerHTML = 'cats';
+
+        const loadinMsg = document.createElement('p');
+        loadinMsg.innerHTML = 'loading...'
 
         const barContainer = document.createElement('div');
         barContainer.classList.add('bar-container');
@@ -36,8 +40,15 @@ const container = document.querySelector('[data-container]');
             return response.json();
         })
         .then(function(response){
+            if(container.contains(defaultImg)) defaultImg.parentNode.removeChild(defaultImg)
+
+            
             myImg.src=response.data.images.original.url;
             container.appendChild(myImg);
+        }).catch(function(err){
+            console.log(err);
+            if(container.contains(myImg)) myImg.parentNode.removeChild(myImg);
+            container.appendChild(defaultImg);
         })
         })
 
