@@ -8,7 +8,7 @@ const container = document.querySelector('[data-container]');
         headerContainer.classList.add('header-container');
         const header = document.createElement('h1');
         header.classList.add('header');
-        header.innerHTML = 'Cool GIFs'
+        header.innerHTML = 'gif'
         const randomBtn = document.createElement('button');
         randomBtn.classList.add('random-btn');
         randomBtn.innerHTML = 'cats';
@@ -33,24 +33,36 @@ const container = document.querySelector('[data-container]');
         container.appendChild(headerContainer);
         container.appendChild(barContainer);
 
-        randomBtn.addEventListener('click', function(){
-            console.log('Cat button clicked')
-            fetch('https://api.giphy.com/v1/gifs/translate?api_key=Sek4VZCrk7hE5ecQnw2WPGHIMkUrIdUt&s=cats', { mode: 'cors' })
-        .then(function(response){
-            return response.json();
-        })
-        .then(function(response){
-            if(container.contains(defaultImg)) defaultImg.parentNode.removeChild(defaultImg)
 
+
+
+        //////////////////////////////////////////
+
+
+        async function getCats() {
+
+            try {
+
+                console.log('Cat button clicked')
+                
+                let response = await fetch('https://api.giphy.com/v1/gifs/translate?api_key=Sek4VZCrk7hE5ecQnw2WPGHIMkUrIdUt&s=cats', { mode: 'cors' })
+                let catData = await response.json();
+                if(container.contains(defaultImg)) defaultImg.parentNode.removeChild(defaultImg)
             
-            myImg.src=response.data.images.original.url;
-            container.appendChild(myImg);
-        }).catch(function(err){
+                myImg.src = catData.data.images.original.url;
+                container.appendChild(myImg);
+            }   catch(err)   {
             console.log(err);
             if(container.contains(myImg)) myImg.parentNode.removeChild(myImg);
             container.appendChild(defaultImg);
-        })
-        })
+        }
+    }
+
+
+
+
+            
+        randomBtn.addEventListener('click', getCats);
 
         searchBtn.addEventListener('click', function(){
             if(container.contains(defaultImg)) {
