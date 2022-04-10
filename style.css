@@ -37,6 +37,11 @@ body {
     color: whitesmoke;
 }
 
+.header:hover {
+    color:#ffff9f;
+    cursor: pointer;
+}
+
 .bar-container {
     text-align: center;
 }

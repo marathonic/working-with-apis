@@ -34,6 +34,10 @@ const container = document.querySelector('[data-container]');
         container.appendChild(barContainer);
 
 
+        //////////clicking logo reloads webpage
+        header.addEventListener('click', function(){
+            location.reload();
+        });
 
 
         //////////////////////////////////////////
