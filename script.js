@@ -66,28 +66,40 @@ const container = document.querySelector('[data-container]');
 
 
             
-        randomBtn.addEventListener('click', getCats);
+randomBtn.addEventListener('click', getCats);
 
-        searchBtn.addEventListener('click', function(){
-            if(container.contains(defaultImg)) {
+////refactoring 
 
-                console.log('Container has blue fren')
-                defaultImg.parentNode.removeChild(defaultImg);
+async function getRequested() {
 
-            }
-            let searchTerm = searchBar.value;
-            console.log('Search button clicked')
-            fetch('https://api.giphy.com/v1/gifs/translate?api_key=Sek4VZCrk7hE5ecQnw2WPGHIMkUrIdUt&s=' + searchTerm, { mode: 'cors' })
-        .then(function(response){
-            return response.json();
-        })
-        .then(function(response){
-            myImg.src=response.data.images.original.url;
-            container.appendChild(myImg);
-        }).catch(function(err){
-            console.log(err);
-            if(container.contains(myImg)) myImg.parentNode.removeChild(myImg);
-            container.appendChild(defaultImg);
-        })
+    
+    try {
+        
+    if(container.contains(defaultImg)) {
+        
+            console.log('Container has blue fren')
+            defaultImg.parentNode.removeChild(defaultImg);
 
-        })
+        }
+        let searchTerm = searchBar.value;
+        console.log('Search button clicked')
+        
+        let response = await fetch('https://api.giphy.com/v1/gifs/translate?api_key=Sek4VZCrk7hE5ecQnw2WPGHIMkUrIdUt&s=' + searchTerm, { mode: 'cors' })
+        let queryData = await response.json();
+        
+        myImg.src = queryData.data.images.original.url;
+        container.appendChild(myImg);
+        
+    
+    }   catch(err)  {
+        console.log(err);
+        if(container.contains(myImg)) myImg.parentNode.removeChild(myImg);
+        container.appendChild(defaultImg);
+    }
+}
+    
+
+//
+
+
+searchBtn.addEventListener('click', getRequested);
